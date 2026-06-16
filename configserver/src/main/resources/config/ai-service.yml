@@ -1,0 +1,46 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: ai-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fitnessrecommendations
+      database: fitnessrecommendations
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+    listener:
+      simple:
+        default-requeue-rejected: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+rabbitmq:
+  exchange:
+    name: fitness.exchange
+  queue:
+    name: activity.queue
+  routing:
+    key: activity.tracking
+
+gemini:
+  api:
+    url: ${GEMINI_API_URL}
+    key: ${GEMINI_API_KEY}
+
+logging:
+  level:
+    root: INFO                                    # general logging
+    com.fitness.aiservice: DEBUG                  # your service logs
+    org.springframework.data.mongodb: DEBUG
+    org.mongodb.driver: DEBUG
+    org.mongodb.driver.protocol.command: DEBUG  # shows insert commands
+    org.mongodb.driver.cluster: OFF             # hides heartbeat noise
